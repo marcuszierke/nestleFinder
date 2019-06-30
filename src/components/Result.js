@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, Image, ScrollView, View, TouchableOpacity } from 'react-native';
-// import { Tooltip } from 'react-native-elements';
+import { Tooltip } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { CardSection, CardBox, Spinner } from './common';
 import colors from './common/colorPalette';
@@ -8,7 +8,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import NoDatabaseMatchErrorMessage from './NoDatabaseMatchErrorMessage';
 import NonFoodErrorMessage from './NonFoodErrorMessage';
 import Brands from './Brands';
-import { directive } from '@babel/types';
 
 export default class Result extends Component {  
 	state = {
@@ -38,46 +37,47 @@ export default class Result extends Component {
 		// const eanCode = this.props.eanCode; // live
 		// const eanCode = '1234567891012'; // no data
 		// const eanCode = '1111111111'; // random number
-		// const eanCode = '5000426171518'; // after eight
+		const eanCode = '5000426171518'; // after eight
 		// const eanCode = '8002270014901'; // san pellegrino
 		// const eanCode = '4008400404127'; // nutella
 		// const eanCode = '5038862161503'; // innocent
 		// const eanCode = '3068320113708'; // evian
 		// const eanCode = '3228024010134'; // camembert
-		const eanCode = '4040900101366'; // no nutri score && n0 nova score
+		// const eanCode = '4040900101366'; // no nutri score && n0 nova score
 		// const eanCode = '9783406727863'; // book
-		// const eanCode = '4003171059842'; // infinite runtime
+		// const eanCode = '4003171059842'; // infinite runtime (Hähnchenbrust)
 		// const eanCode = '4001568200518'; // infinite runtime (Vita Malz)
-		// const eanCode = '4062800008941'; // infinite runtime (Sahen)
+		// const eanCode = '4062800008941'; // infinite runtime (Sahne)
 		// const eanCode = '8424372021500'; // infinite runtime (wasser)
-		// const eanCode = '8411002101503'; // infinite runtime (nestle wasser)
 		// const eanCode = '8429359000004'; // infinite runtime (wasser)
 
 		const url = `https://world.openfoodfacts.org/api/v0/product/${eanCode}.json`;
 		const response = await fetch(url);
 		let data = undefined;
-		if(response.status == 200) {
+		if (response.status == 200) {
 			const responseJson = await response.json();
-			if (responseJson.status === 1) {
+			const status = await responseJson.status;
+			if (status === 1) {
 				const status = responseJson.status;
 				this.setState({ status });
-				// if (responseJson.product !== undefined && !responseJson.product.categories.includes('Non')) {
-				if (responseJson.product !== undefined) {
+				const data = await responseJson.product;
+				if (!data.hasOwnProperty('_keywords') || !data['_keywords'].includes('non')) {
+					console.log('do we get here?');
 					const isFood = true;
-					const data = await responseJson.product;
 					const loading = !this.state.loading;
-					this.setState({ isFood, data, loading });
+					await this.setState({ isFood, data, loading });
+					console.log('data props', !data.hasOwnProperty('_keywords'), data['_keywords'].includes('non'), this.state);
 					await this.searchProductInNestleList();
-				} else {
-					const isFood = false;
-					const loading = !this.state.loading;
-					this.setState({ isFood, loading });
 				}
 			} else {
-				const status = responseJson.status;
+				const isFood = false;
 				const loading = !this.state.loading;
-				this.setState({ status, loading });
+				this.setState({ isFood, loading });
 			}
+		} else {
+			const status = responseJson.status;
+			const loading = !this.state.loading;
+			this.setState({ status, loading });
 		}
 	}
 
@@ -135,17 +135,18 @@ export default class Result extends Component {
 			scoreContainerStyle,
 			navButtonStyle,
 			headerContainerStyle,
-			brandNamesContainerStyle
+			brandNamesContainerStyle,
+			infoIconStyle
 		} = styles;
 
 		if (this.state.loading) {
-			return <Spinner />
+			result = <Spinner />
 		}
+
 		if (this.state.status === 0) {
 			result = <NoDatabaseMatchErrorMessage />;
 		} else {
 			if (this.state.isFood) {
-				// const imageSizes = this.state.data.images['1'].sizes['400'];
 				const image = this.state.data.image_front_url;
 				const brands = this.state.data.brands;
 				const productName = this.state.data.product_name;
@@ -235,7 +236,23 @@ export default class Result extends Component {
 				if (nutriScoreValue !== 0) {
 					nutriScore = (
 						<View>		
-							<Text style={textStyle}>Nutri-Score</Text>
+							<Tooltip
+								popover={
+									<Text>
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>What is Nutri-Score?{"\n"}</Text>
+										<Text style={{ lineHeight: 20, marginTop: 10, marginBottom: 10 }}>The Nutri-Score is a logo that shows the nutritional quality of food products with A to E grades. With the NutriScore, products can be easily and quickly compared.{"\n"}</Text>
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>How is Nutri-Score computed?</Text>{"\n"}
+										The Nutri-Score grade is determined by the amount of healthy and unhealthy nutrients:{"\n"}
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Positive Points:</Text> the proportion of fruits, vegetables and nuts, fibers and proteins (high levels are considered good for health).{"\n"}
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Negative Points:</Text> energy, saturated fat, sugars, sodium (high levels are considered unhealthy).{"\n"}
+									</Text>
+								}
+								height={385}
+								width={240}
+								backgroundColor={'#F7DC81'}
+							>
+								<Text style={textStyle}>Nutri-Score &#9432;</Text>
+							</Tooltip>
 								<CardBox style={scoreContainerStyle}>
 									<View style={{ display: 'flex', justiftContent: 'center', alignItems: 'center' }}>
 										<LinearGradient 
@@ -255,7 +272,24 @@ export default class Result extends Component {
 				if (novaScoreValue !== undefined) {
 					novaScore = (
 						<View>
-							<Text style={textStyle}>Nova-Score</Text>
+							<Tooltip 
+								popover={
+									<Text>
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Nova groups for food processing{"\n"}</Text>
+										<Text style={{ lineHeight: 20, marginTop: 10, marginBottom: 10 }}>A classification in 4 groups to highlight the degree of processing of foods
+										The NOVA classification assigns a group to food products based on how much processing they have been through:{"\n"}</Text>
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Group 1</Text> - Unprocessed or minimally processed foods{"\n"}
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Group 2</Text> - Processed culinary ingredients{"\n"}
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Group 3</Text> - Processed foods{"\n"}
+										<Text style={{ fontWeight: 'bold', lineHeight: 20 }}>Group 4</Text> - Ultra-processed food and drink products{"\n"}
+									</Text>
+								}
+								height={350}
+								width={225}
+								backgroundColor={'#F7DC81'}
+								>
+								<Text style={textStyle}>Nova-Score &#9432;</Text>
+							</Tooltip>
 							<CardBox style={scoreContainerStyle}>
 								<View style={{ display: 'flex', justiftContent: 'center', alignItems: 'center'}}>
 									<LinearGradient colors={colors[Number(novaScoreValue)]} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }} style={{ borderRadius: 5, width: 70, height: 70, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
@@ -271,6 +305,14 @@ export default class Result extends Component {
 				if (this.state.data.brands !== undefined) {
 					brandsOverview = (
 						<Brands brands={brands} />
+					);
+				} else {
+					brandsOverview = (
+						<CardBox>
+							<View style={brandNamesContainerStyle}>
+								<Text style={{ textAlign: 'center' }}>Unfortunately there is no information available.</Text>
+							</View>
+						</CardBox>
 					);
 				}
 
@@ -314,7 +356,7 @@ export default class Result extends Component {
 						</CardSection>
 					</View>
 				);
-			} else {
+			}	else {
 				result = <NonFoodErrorMessage />;
 			}
 		}
@@ -426,6 +468,16 @@ const styles = {
 		fontWeight: '600',
 		color: colors.textDark,
 		width: '90%',
+	},
+	infoIconStyle: {
+		borderRadius: 10,
+		borderWidth: 1,
+		width: 20,
+		height: 20,
+		marginLeft: 10,
+		fontSize: 14,
+		fontWeight: '600',
+		color: colors.textDark,
 	},
 	nutriInfoBox: { 
 		borderWidth: 1,
