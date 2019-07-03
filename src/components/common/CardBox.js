@@ -22,10 +22,10 @@ const styles = {
 		paddingRight: 30,
 		marginBottom: 10,
 		borderRadius: 5,
-		shadowOffset: { height: 5 },
-		shadowOpacity: 0.15,
-		shadowRadius: 30,
-		shadowColor: colors.buttonShadow,
+		// shadowOffset: { height: 5 },
+		shadowOpacity: 0.2,
+		shadowRadius: 15,
+		shadowColor: colors.black,
 		backgroundColor: colors.textLight
 	}
 };

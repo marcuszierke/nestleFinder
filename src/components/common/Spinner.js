@@ -1,26 +1,28 @@
 import React from 'react';
-import { View, Text, ActivityIndicator, Image } from 'react-native';
+import { View, Text, ActivityIndicator } from 'react-native';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Spinner = ({ size }) => {
 
 	return (
-		<View style={styles.spinnerStyle}>
-			<Image
-				source={require('../../../assets/images/placeholderGiraffe.jpg')}
-				style={{ height: 125, width: 125, marginBottom: 20}}
-				resizeMode='contain'
-			/>
-			<ActivityIndicator size={size || 'large'} color={'#000'} />
-			{/* <Text style={{ color: 'black'}}>Let's see what we got here</Text> */}
-		</View>
+		<LinearGradient colors={['#00d2ff', '#3a7bd5']} start={{ x: 0, y: 0 }} end={{ x: 0, y: 1 }} style={styles.container}>
+			<ActivityIndicator size={size || 'large'} color={'#FFF'} style={styles.spinnerStyle}/>
+			<Text style={{ color: 'white', marginBottom: '75%'}}>Loading the results</Text>
+		</LinearGradient>
 	);
 };
 
 const styles = {
-	spinnerStyle: {
-		flex: 1,
+	container: {
+		height: '100%',
+		display: 'flex',
+		// justifyContent: 'center',
 		alignItems: 'center',
-		justifyContent: 'center'
+	},
+	spinnerStyle: {
+		paddingBottom: 20,
+		marginTop: '100%',
+		// marginBottom: '75%'
 	}
 };
 

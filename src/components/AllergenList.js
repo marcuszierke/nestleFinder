@@ -2,28 +2,29 @@ import React from 'react';
 import { Text, View } from 'react-native';
 import colors from './common/colorPalette';
 
-export default Brands = props => {
-  let brandsOverview = undefined;
+export default AllergenList = props => {
+  const allergens = props.data['allergens_tags'];
+  let allergenList = undefined;
 
-  if (props.brands !== undefined || props.brands === '') {
-    brandsOverview = (
-      <View>
-        {props.brands.split(',').map(name => <Text key={name}>{name}</Text>)}
-      </View>
+  if (allergens !== undefined && allergens.length !== 0) {
+    allergenList = (
+        <View>
+          {allergens.map(name => <Text key={name}>{name.slice(3)}</Text>)}
+        </View>
     );
   } else {
-    brandsOverview = (
+    allergenList = (
         <View>
           <Text style={{ textAlign: 'center' }}>Unfortunately there is no information available.</Text>
         </View>
     );
   }
-
+  
   return (
     <View style={styles.containerStyle}>
-      {brandsOverview}
+      {allergenList}
     </View>
-  );
+  )
 }
 
 const styles = {

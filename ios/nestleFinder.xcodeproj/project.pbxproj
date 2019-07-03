@@ -776,6 +776,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -1339,7 +1340,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = productScanner;
 				PRODUCT_NAME = nestleFinder;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1363,7 +1364,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
+				PRODUCT_BUNDLE_IDENTIFIER = productScanner;
 				PRODUCT_NAME = nestleFinder;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

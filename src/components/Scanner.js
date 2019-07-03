@@ -5,7 +5,6 @@ import BarcodeMask from 'react-native-barcode-mask';
 import { Actions } from 'react-native-router-flux';
 
 export default class Scanner extends Component {
-  
   constructor(props) {
     super(props);
     // this.camera = null;

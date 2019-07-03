@@ -34,21 +34,21 @@ export default class NoDatabaseMatchErrorMessage extends Component {
                 onPress={this.backToHomeScreen.bind(this)}
                 activeOpacity={0.9}
               >
-                <Text style={styles.navButtonStyle}>HOME</Text>
+                <Text style={navButtonStyle}>HOME</Text>
               </TouchableOpacity>
-              <Text style={styles.productNameStyle}>OOOOPSI!</Text>
+              <Text style={productNameStyle}>OOOOPSI!</Text>
               <TouchableOpacity
                 onPress={this.backToScanner.bind(this)}
                 activeOpacity={0.9}
               >
-                <Text style={styles.navButtonStyle}>SCAN</Text>
+                <Text style={navButtonStyle}>SCAN</Text>
               </TouchableOpacity>
             </View>
           </CardSection>
         </LinearGradient>
         <CardSection style={containerStyle}>
           <Image
-            source={ require('../../assets/images/placeholderHorse.jpg') }
+            source={ require('../../assets/images/dog.png') }
             style={errorMessageImageStyle}
             resizeMode='contain'
           />
@@ -79,8 +79,8 @@ const styles = {
     alignItems: 'center'
   },
   productNameStyle: {
-    marginBottom: '8%',
-    marginTop: '8%',
+    // marginBottom: '15%',
+    marginTop: '15%',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: 15,
@@ -92,7 +92,7 @@ const styles = {
     textAlign: 'center'
   },
   errorMessageImageStyle: {
-    height: '35%',
+    height: '25%',
     width: '100%',
     marginTop: '20%'
   },

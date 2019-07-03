@@ -37,23 +37,26 @@ export default class NonFoodErrorMessage extends Component {
               >
                 <Text style={styles.navButtonStyle}>HOME</Text>
               </TouchableOpacity>
-              <Text style={styles.productNameStyle}>SOMETHING WENT WRONG</Text>
+              <Text style={productNameStyle}>SOMETHING WENT WRONG</Text>
               <TouchableOpacity
                 onPress={this.backToScanner.bind(this)}
                 activeOpacity={0.9}
               >
-                <Text style={styles.navButtonStyle}>SCAN</Text>
+                <Text style={navButtonStyle}>SCAN</Text>
               </TouchableOpacity>
             </View>
           </CardSection>
         </LinearGradient>
         <CardSection style={containerStyle}>
           <Image
-            source={require('../../assets/images/placeholderMonkey.jpg')}
+            source={require('../../assets/images/hamster.png')}
             style={[errorMessageImageStyle, monkeyImageStyle]}
             resizeMode='contain'
           />
-          <Text style={errorMessageTextStyle}>Looks like a non-food product you tried to scan!</Text>
+          <Text style={errorMessageTextStyle}>Are you sure you can drink or eat what you just tried to scan? {'\n'}Well if that's the case than there is a bunch of information still missing. Why don't you help adding them!? Check it out
+            <Text style={{ color: 'blue' }} onPress={() => Linking.openURL('https://world.openfoodfacts.org')}> here </Text>
+          !
+				  </Text>
         </CardSection>
       </View>
     )
@@ -76,8 +79,8 @@ const styles = {
     alignItems: 'center'
   },
   productNameStyle: {
-    marginBottom: '8%',
-    marginTop: '8%',
+    // marginBottom: '5%',
+    marginTop: '15%',
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: 15,
@@ -89,9 +92,9 @@ const styles = {
     textAlign: 'center'
   },
   errorMessageImageStyle: {
-    height: '35%',
+    height: '30%',
     width: '100%',
-    marginTop: '20%'
+    // marginTop: '10%'
   },
   errorMessageTextStyle: {
     fontSize: 13,
@@ -103,7 +106,7 @@ const styles = {
     textAlign: 'center'
   },
   monkeyImageStyle: {
-    marginTop: '35%'
+    marginTop: '25%'
   },
   headerContainerStyle: {
     display: 'flex',
