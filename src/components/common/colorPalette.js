@@ -8,7 +8,8 @@ const colors = {
 	textDark: '#88888F',
 	infoBoxBorder: '#9E9DA5',
 	green: '#2EB75C',
-	lightBackground: '#FFFDFD'
+	lightBackground: '#FFFDFD',
+	black: '#000'
 }
 
 export default colors;
