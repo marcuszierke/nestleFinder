@@ -21,34 +21,27 @@ export default class ResultHeader extends Component {
 
     return (
       <LinearGradient colors={this.props.isNestle ? badColors : goodColors} start={{ x: 0, y: 0 }} end={{ x: 1, y: 0 }}>
-        <CardSection style={{emptyContainerStyle}}>
-          <View style={headerContainerStyle}>
-            <TouchableOpacity
-              onPress={this.backToHomeScreen.bind(this)}
-              activeOpacity={0.9}
-            >
-              <Text style={navButtonStyle}>HOME</Text>
-            </TouchableOpacity>
-            <Text style={productNameStyle}>{this.props.productName}</Text>
-            <TouchableOpacity
-              onPress={this.backToScanner.bind(this)}
-              activeOpacity={0.9}
-            >
-              <Text style={navButtonStyle}>SCAN</Text>
-            </TouchableOpacity>
-          </View>
-        </CardSection>
+        <View style={headerContainerStyle}>
+          <TouchableOpacity
+            onPress={this.backToHomeScreen.bind(this)}
+            activeOpacity={0.9}
+          >
+            <Text style={navButtonStyle}>HOME</Text>
+          </TouchableOpacity>
+          <Text style={productNameStyle}>{this.props.productName}</Text>
+          <TouchableOpacity
+            onPress={this.backToScanner.bind(this)}
+            activeOpacity={0.9}
+          >
+            <Text style={navButtonStyle}>SCAN</Text>
+          </TouchableOpacity>
+        </View>
       </LinearGradient>
     )
   }
 }
 
 const styles = {
-  emptyContainerStyle: {
-    height: 175,
-    display: 'flex',
-    alignItems: 'center'
-  },
   headerContainerStyle: {
     display: 'flex',
     justifyContent: 'space-between',
@@ -73,13 +66,13 @@ const styles = {
   },
   productNameStyle: {
     marginTop: '10%',
-    marginBottom: '5%',
+    marginBottom: 75,
     marginLeft: 'auto',
     marginRight: 'auto',
     paddingTop: 15,
     paddingLeft: 20,
     paddingRight: 20,
-    paddingBottom: 30,
+    // paddingBottom: 20,
     fontSize: 24,
     flexGrow: 1,
     fontWeight: '500',

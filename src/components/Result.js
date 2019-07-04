@@ -29,7 +29,7 @@ export default class Result extends Component {
 		// const eanCode = '1111111111'; // random number
 		// const eanCode = '5000426171518'; // after eight
 		// const eanCode = '8002270014901'; // san pellegrino
-		const eanCode = '4008400404127'; // nutella
+		// const eanCode = '4008400404127'; // nutella
 		// const eanCode = '5038862161503'; // innocent
 		// const eanCode = '3068320113708'; // evian
 		// const eanCode = '4061458104265'; // Weidemlich (allergens length breaks app)
@@ -39,7 +39,7 @@ export default class Result extends Component {
 		// const eanCode = '9783406727863'; // book
 		// const eanCode = '4003171059842'; // infinite runtime (Hähnchenbrust)
 		// const eanCode = '4001568200518'; // infinite runtime (Vita Malz)
-		// const eanCode = '4062800008941'; // infinite runtime (Sahne - keine Farben für Nutriments)
+		const eanCode = '4062800008941'; // infinite runtime (Sahne - keine Farben für Nutriments)
 		// const eanCode = '8424372021500'; // infinite runtime (wasser)
 		// const eanCode = '8429359000004'; // infinite runtime (wasser)
 		
